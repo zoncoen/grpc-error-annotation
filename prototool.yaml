@@ -1,0 +1,18 @@
+protoc:
+  version: 3.8.0
+lint:
+  group: uber2
+generate:
+  # Options that will apply to all plugins of type go and gogo.
+  go_options:
+    import_path: github.com/zoncoen/grpc-error-annotation
+
+    extra_modifiers:
+      proto/api/grpc/grpc.proto: github.com/zoncoen/grpc-error-annotation/gen/annotation/api/grpc
+
+  # The list of plugins.
+  plugins:
+    - name: gogo
+      type: gogo
+      flags: plugins=grpc
+      output: ../../../

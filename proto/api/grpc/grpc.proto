@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package zoncoen.api.grpc;
+
+import "google/protobuf/descriptor.proto";
+option go_package = "github.com/zoncoen/grpc-error-annotation/gen/annotation/api/grpc;grpc";
+
+extend google.protobuf.MethodOptions {
+    Error error = 56789;
+}
+
+message Error {
+    ErrorDescription cancelled = 1;
+    ErrorDescription unknown = 2;
+    ErrorDescription invalid_argument = 3;
+    ErrorDescription deadline_exceeded = 4;
+    ErrorDescription not_found = 5;
+    ErrorDescription already_exists = 6;
+    ErrorDescription permission_denied = 7;
+    ErrorDescription unauthenticated = 16;
+    ErrorDescription resource_exhausted = 8;
+    ErrorDescription failed_precondition = 9;
+    ErrorDescription aborted = 10;
+    ErrorDescription out_of_range = 11;
+    ErrorDescription unimplemented = 12;
+    ErrorDescription internal = 13;
+    ErrorDescription unavailable = 14;
+    ErrorDescription data_loss = 15;
+}
+
+message ErrorDescription {
+    repeated string causes = 1;
+}
