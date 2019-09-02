@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package zoncoen.example;
+
+import "proto/api/grpc/grpc.proto";
+option go_package = "github.com/zoncoen/grpc-error-annotation/example/gen/example;example";
+
+service UserService {
+    rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
+        option (zoncoen.api.grpc.error) = {
+            invalid_argument: {
+                causes: "name is empty",
+                causes: "name length is over 30",
+            }
+            already_exists: {
+                causes: "same name user already exists",
+            }
+        };
+    }
+}
+
+message CreateUserRequest {
+    string name = 1;
+}
+
+message CreateUserResponse {
+    User user = 1;
+}
+
+message User {
+    string user_id = 1;
+    string name = 2;
+}
+
