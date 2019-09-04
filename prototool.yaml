@@ -1,5 +1,7 @@
 protoc:
   version: 3.8.0
+  includes:
+    - ../../gogo/googleapis
 lint:
   group: uber2
 generate:
@@ -8,7 +10,10 @@ generate:
     import_path: github.com/zoncoen/grpc-error-annotation
 
     extra_modifiers:
-      proto/api/grpc/grpc.proto: github.com/zoncoen/grpc-error-annotation/gen/annotation/api/grpc
+      google/rpc/code.proto: google.golang.org/genproto/googleapis/rpc/code
+      google/rpc/duration.proto: google.golang.org/genproto/googleapis/rpc/duration
+      proto/error.proto: github.com/zoncoen/grpc-error-annotation/gen/annotation
+      proto/retry.proto: github.com/zoncoen/grpc-error-annotation/gen/annotation
 
   # The list of plugins.
   plugins:

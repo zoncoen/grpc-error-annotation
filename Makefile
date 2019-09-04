@@ -8,7 +8,7 @@ install:
 
 .PHONY: example
 example:
-	protoc -I. --go-grpc-error_out=../../.. example/proto/*.proto
+	protoc -I. -I${GOPATH}/src/github.com/gogo/googleapis --go-grpc-error_out=../../.. example/proto/*.proto
 
 .PHONY: clean
 clean:

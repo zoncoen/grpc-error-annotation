@@ -2,16 +2,29 @@ syntax = "proto3";
 
 package zoncoen.example;
 
-import "proto/api/grpc/grpc.proto";
+import "proto/error.proto";
+import "proto/retry.proto";
 option go_package = "github.com/zoncoen/grpc-error-annotation/example/gen/example;example";
 
 service UserService {
+    option (zoncoen.api.grpc.retry) = {
+        rules: {
+            name: "idempotent",
+            codes: [ UNAVAILABLE, DEADLINE_EXCEEDED ],
+            params: { never: {} },
+        }
+    };
+
     rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
         option (zoncoen.api.grpc.error) = {
-            invalid_argument: {
-                description: "validation error",
-            }
-            already_exists: {}
+            codes: [ INVALID_ARGUMENT, ALREADY_EXISTS ],
+        };
+    }
+
+    rpc GetUser(GetUserRequest) returns (GetUserResponse) {
+        option (zoncoen.api.grpc.error) = {
+            codes: [ INVALID_ARGUMENT ],
+            retry_rule: "default",
         };
     }
 }
@@ -21,6 +34,14 @@ message CreateUserRequest {
 }
 
 message CreateUserResponse {
+    User user = 1;
+}
+
+message GetUserRequest {
+    string user_id = 1;
+}
+
+message GetUserResponse {
     User user = 1;
 }
 

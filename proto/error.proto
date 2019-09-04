@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package zoncoen.api.grpc;
+
+import "google/protobuf/descriptor.proto";
+import "google/rpc/code.proto";
+
+option go_package = "github.com/zoncoen/grpc-error-annotation/gen/annotation;annotation";
+
+extend google.protobuf.MethodOptions {
+    Error error = 56789;
+}
+
+message Error {
+    repeated google.rpc.Code codes = 1;
+    string retry_rule = 2;
+}
+

@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package zoncoen.api.grpc;
+
+import "google/protobuf/descriptor.proto";
+import "google/rpc/code.proto";
+import "google/protobuf/duration.proto";
+
+option go_package = "github.com/zoncoen/grpc-error-annotation/gen/annotation;annotation";
+
+extend google.protobuf.ServiceOptions {
+    RetryAnnotation retry = 56789;
+}
+
+message RetryAnnotation {
+    repeated RetryRule rules = 1;
+}
+
+message RetryRule {
+    string name = 1;
+    repeated google.rpc.Code codes = 2;
+    Retry params = 3;
+}
+
+message Retry {
+    oneof policy {
+        Never never = 1;
+        Constant constant = 2;
+        Exponential exponential = 3;
+    }
+}
+
+message Never {
+}
+
+message Constant {
+    google.protobuf.Duration interval = 1;
+    uint64 max_retries = 2;
+}
+
+message Exponential {
+    google.protobuf.Duration initial_interval = 1;
+    double jitter_factor = 2;
+    double multiplier = 3;
+    google.protobuf.Duration max_interval = 4;
+    google.protobuf.Duration max_elapsed_time = 5;
+    uint64 max_retries = 6;
+}
+

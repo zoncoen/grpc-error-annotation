@@ -7,7 +7,7 @@ import (
 	context "context"
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
-	_ "github.com/zoncoen/grpc-error-annotation/gen/annotation/api/grpc"
+	_ "github.com/zoncoen/grpc-error-annotation/gen/annotation"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -22,6 +22,7 @@ var _ = math.Inf
 var mapUserService = map[string]struct{}{
 	"/zoncoen.example.UserService/CreateUser/3": struct{}{},
 	"/zoncoen.example.UserService/CreateUser/6": struct{}{},
+	"/zoncoen.example.UserService/GetUser/3":    struct{}{},
 }
 
 // NewUserServiceCheckErrorUnaryServerInterceptor returns an interceptor to check status code.
@@ -46,5 +47,12 @@ func NewUserServiceCheckErrorUnaryServerInterceptor(f func(context.Context, *grp
 			}
 		}
 		return resp, err
+	}
+}
+
+// NewUserServiceRetryUnaryClientInterceptor
+func NewUserServiceRetryUnaryClientInterceptor() grpc.UnaryClientInterceptor {
+	return func(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
+		return nil
 	}
 }
