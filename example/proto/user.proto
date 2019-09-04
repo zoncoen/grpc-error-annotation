@@ -9,12 +9,9 @@ service UserService {
     rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
         option (zoncoen.api.grpc.error) = {
             invalid_argument: {
-                causes: "name is empty",
-                causes: "name length is over 30",
+                description: "validation error",
             }
-            already_exists: {
-                causes: "same name user already exists",
-            }
+            already_exists: {}
         };
     }
 }

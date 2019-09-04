@@ -10,24 +10,24 @@ extend google.protobuf.MethodOptions {
 }
 
 message Error {
-    ErrorDescription cancelled = 1;
-    ErrorDescription unknown = 2;
-    ErrorDescription invalid_argument = 3;
-    ErrorDescription deadline_exceeded = 4;
-    ErrorDescription not_found = 5;
-    ErrorDescription already_exists = 6;
-    ErrorDescription permission_denied = 7;
-    ErrorDescription unauthenticated = 16;
-    ErrorDescription resource_exhausted = 8;
-    ErrorDescription failed_precondition = 9;
-    ErrorDescription aborted = 10;
-    ErrorDescription out_of_range = 11;
-    ErrorDescription unimplemented = 12;
-    ErrorDescription internal = 13;
-    ErrorDescription unavailable = 14;
-    ErrorDescription data_loss = 15;
+    ErrorCode cancelled = 1;
+    ErrorCode unknown = 2;
+    ErrorCode invalid_argument = 3;
+    ErrorCode deadline_exceeded = 4;
+    ErrorCode not_found = 5;
+    ErrorCode already_exists = 6;
+    ErrorCode permission_denied = 7;
+    ErrorCode unauthenticated = 16;
+    ErrorCode resource_exhausted = 8;
+    ErrorCode failed_precondition = 9;
+    ErrorCode aborted = 10;
+    ErrorCode out_of_range = 11;
+    ErrorCode unimplemented = 12;
+    ErrorCode internal = 13;
+    ErrorCode unavailable = 14;
+    ErrorCode data_loss = 15;
 }
 
-message ErrorDescription {
-    repeated string causes = 1;
+message ErrorCode {
+    string description = 1;
 }
